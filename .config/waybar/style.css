@@ -1,0 +1,65 @@
+@import "colors.css";
+
+* {
+  font-size: 16px;
+  font-family: "Hack Nerd Font";
+  min-width: 8px;
+  min-height: 0px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 0px;
+  background: transparent;
+}
+
+window#waybar {
+  /* border-radius: 8px; */
+  background: alpha(@background, 0.8);
+  border-width: 2px;
+  border-style: solid;
+  border-color: @primary;
+}
+
+#workspaces {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+#workspaces button {
+  border: none;
+  background: none;
+  box-shadow: inherit;
+  text-shadow: inherit;
+
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 2px;
+  margin-left: 2px;
+  padding-top: 1px;
+  padding-bottom: 0px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 3px;
+}
+
+#workspaces button.active {
+  background-color: @primary;
+}
+
+#workspaces button.urgent {
+  background-color: #ef5e5e;
+  color: #282828;
+}
+
+.modules-center {
+  color: lighter(@primary);
+}
+
+.modules-right {
+  margin-right: 10px;
+}
+
+.modules-right * {
+  padding-left: 24px;
+}
