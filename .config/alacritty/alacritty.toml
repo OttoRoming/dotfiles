@@ -6,33 +6,36 @@ bold_italic = { family = "Hack Nerd Font", style = "Bold Italic" }
 size = 10
 
 [colors.primary]
-foreground = "#abb2bf"
-background = "#282c34"
+foreground = "#FFFFFF"
+background = "#2C3746"
 
 [colors.cursor]
-text = "#282c34"
-cursor = "#61afef"
+text = "#2C3746"
+cursor = "#FFFFFF"
 
 [colors.selection]
-text = "#abb2bf"
-background = "#3A4A5E"
+text = "#2C3746"
+background = "#FFFFFF"
 
 [colors.normal]
-black = "#1e2127"
-red = "#e06c75"
-green = "#98c379"
-yellow = "#d19a66"
-blue = "#61afef"
-magenta = "#c678dd"
-cyan = "#56b6c2"
-white = "#abb2bf"
+black = "#28333F"
+red = "#F22C57"
+green = "#28A09C"
+yellow = "#98c379"
+blue = "#176EF1"
+magenta = "#AF69DD"
+cyan = "#4FB0B3"
+white = "#879596"
 
 [colors.bright]
-black = "#5c6370"
-red = "#e06c75"
-green = "#98c379"
-yellow = "#d19a66"
-blue = "#61afef"
-magenta = "#c678dd"
-cyan = "#56b6c2"
-white = "#ffffff"
+black = "#2B3644"
+red = "#F22C57"
+green = "#2AACAA"
+yellow = "#F7C067"
+blue = "#176EF1"
+magenta = "#CB75F7"
+cyan = "#5CC6D1"
+white = "#9CACAD"
+
+[window]
+opacity = 0.8

@@ -17,6 +17,7 @@ export MOZ_USE_XINPUT2=1
 # . /usr/share/nvm/init-nvm.sh
 
 export PATH="~/.cargo/bin/:${PATH}"
+export PATH="~/.config/bin/:${PATH}"
 alias w++='g++ -std=c++17 -Wall -Wextra -Wpedantic -Weffc++ -Wold-style-cast -g'
 
 fastfetch

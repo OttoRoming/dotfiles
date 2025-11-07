@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+lock=" lock"
+logout="󰀄 logout"
+reboot=" reboot"
+poweroff="⏻ poweroff"
+
+choice=$(printf '%s\n%s\n%s\n%s\n' "$lock" "$logout" "$reboot" "$poweroff" | menu)
+case choice in
+$lock)
+  lock
+  ;;
+$logout)
+  logout
+  ;;
+$reboot)
+  systemctl reboot
+  ;;
+$poweroff)
+  systemctl poweroff
+  ;;
+esac

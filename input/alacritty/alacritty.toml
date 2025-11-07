@@ -1,0 +1,41 @@
+[font]
+normal = { family = "Hack Nerd Font", style = "Regular" }
+bold = { family = "Hack Nerd Font", style = "Bold" }
+italic = { family = "Hack Nerd Font", style = "Italic" }
+bold_italic = { family = "Hack Nerd Font", style = "Bold Italic" }
+size = 10
+
+[colors.primary]
+foreground = "#@foreground@"
+background = "#@background@"
+
+[colors.cursor]
+text = "#@background@"
+cursor = "#@foreground@"
+
+[colors.selection]
+text = "#@background@"
+background = "#@foreground@"
+
+[colors.normal]
+black = "#@black@"
+red = "#@red@"
+green = "#@green@"
+yellow = "#@yellow@"
+blue = "#@blue@"
+magenta = "#@magenta@"
+cyan = "#@cyan@"
+white = "#@white@"
+
+[colors.bright]
+black = "#@bright_black@"
+red = "#@bright_red@"
+green = "#@bright_green@"
+yellow = "#@bright_yellow@"
+blue = "#@bright_blue@"
+magenta = "#@bright_magenta@"
+cyan = "#@bright_cyan@"
+white = "#@bright_white@"
+
+[window]
+opacity = 0.8

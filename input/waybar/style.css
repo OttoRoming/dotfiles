@@ -13,10 +13,10 @@
 
 window#waybar {
   /* border-radius: 8px; */
-  background: alpha(#2C3746, 0.8);
+  background: alpha(#@background@, 0.8);
   border-width: 2px;
   border-style: solid;
-  border-color: #F22C57;
+  border-color: #@primary@;
 }
 
 #workspaces {
@@ -42,7 +42,7 @@ window#waybar {
 }
 
 #workspaces button.active {
-  background-color: #F22C57;
+  background-color: #@primary@;
 }
 
 #workspaces button.urgent {
@@ -51,7 +51,7 @@ window#waybar {
 }
 
 .modules-center {
-  color: lighter(#F22C57);
+  color: lighter(#@primary@);
 }
 
 .modules-right {
@@ -63,9 +63,9 @@ window#waybar {
 }
 
 #battery.warning {
-  color: #F7C067;
+  color: #@bright_yellow@;
 };
 
 #battery.critical {
-  color: #F22C57;
+  color: #@bright_red@;
 };
