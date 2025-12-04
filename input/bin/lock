@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+swaylock --font 'Hack Nerd Font' --font-size 16 \
+  -c @background@ \
+  --inside-caps-lock-color @bright_yellow@ \
+  --inside-ver-color @background@ \
+  --separator-color @black@ \
+  --key-hl-color @primary@ \
+  --line-color @black@ \
+  --ring-color @background@ \
+  --ring-ver-color @background@ \
+  --ring-clear-color @background@ \
+  --text-color @foreground@ \
+  --text-clear-color @foreground@ \
+  --line-ver-color @black@ \
+  --text-ver-color @foreground@ \
+  --inside-wrong-color @bright_red@ \
+  --inside-clear-color @bright_yellow@ \
+  --line-wrong-color @black@ \
+  --line-clear-color @black@ \
+  \
+  --text-wrong-color @foreground@ \
+  --inside-color @bright_black@ \
+  \
+  --ring-caps-lock-color @background@ \
+  --ring-wrong-color @background@ \
+  --line-caps-lock-color @black@ \
+  --text-caps-lock-color @foreground@ \
+  --layout-bg-color @background@

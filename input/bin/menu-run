@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+bemenu-run --list 25 --counter always --prompt '' --width-factor 0.26 --center --cw 2 --fn 'DroidSansM Nerd Font 12' \
+  --tb '#@primary@cc' --tf '#@foreground@ff' \
+  --fb '#@background@cc' --ff '#@foreground@ff' \
+  --nb '#@background@cc' --nf '#@foreground@ff' \
+  --ab '#@background@cc' --af '#@foreground@ff' \
+  --hb '#@primary@cc' --hf '#@foreground@ff'

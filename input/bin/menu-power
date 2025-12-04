@@ -5,18 +5,8 @@ logout="󰀄 logout"
 reboot=" reboot"
 poweroff="⏻ poweroff"
 
-choice=$(printf '%s\n%s\n%s\n%s\n' "$lock" "$logout" "$reboot" "$poweroff" | menu)
-case choice in
-$lock)
-  lock
-  ;;
-$logout)
-  logout
-  ;;
-$reboot)
-  systemctl reboot
-  ;;
-$poweroff)
-  systemctl poweroff
-  ;;
-esac
+choice=$(printf '%s\n%s\n%s\n%s\n' "$lock" "$logout" "$reboot" "$poweroff" | /home/otto/.config/bin/menu)
+[ "$choice" == "$lock" ] && /home/otto/.config/bin/lock
+[ "$choice" == "$logout" ] && pkill mango
+[ "$choice" == "$reboot" ] && systemctl reboot
+[ "$choice" == "$poweroff" ] && systemctl poweroff

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+swaylock --font 'Hack Nerd Font' --font-size 16 \
+  -c 2C3746 \
+  --inside-caps-lock-color F7C067 \
+  --inside-ver-color 2C3746 \
+  --separator-color 28333F \
+  --key-hl-color F22C57 \
+  --line-color 28333F \
+  --ring-color 2C3746 \
+  --ring-ver-color 2C3746 \
+  --ring-clear-color 2C3746 \
+  --text-color FFFFFF \
+  --text-clear-color FFFFFF \
+  --line-ver-color 28333F \
+  --text-ver-color FFFFFF \
+  --inside-wrong-color F22C57 \
+  --inside-clear-color F7C067 \
+  --line-wrong-color 28333F \
+  --line-clear-color 28333F \
+  \
+  --text-wrong-color FFFFFF \
+  --inside-color 2B3644 \
+  \
+  --ring-caps-lock-color 2C3746 \
+  --ring-wrong-color 2C3746 \
+  --line-caps-lock-color 28333F \
+  --text-caps-lock-color FFFFFF \
+  --layout-bg-color 2C3746

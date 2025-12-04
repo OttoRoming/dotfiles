@@ -64,8 +64,8 @@ window#waybar {
 
 #battery.warning {
   color: #@bright_yellow@;
-};
+}
 
 #battery.critical {
   color: #@bright_red@;
-};
+}
