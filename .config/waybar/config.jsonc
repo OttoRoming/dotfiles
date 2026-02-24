@@ -16,7 +16,9 @@
     "tray"
   ],
   "custom/btw": {
-    "format": " "
+    "format": "{text}",
+    "exec": "~/.local/bin/distro-icon",
+    "interval": "once"
   },
   "ext/workspaces": {
     "format": "{icon}",

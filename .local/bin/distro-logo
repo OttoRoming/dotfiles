@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+id=$(grep -P "^ID=" /etc/os-release | cut -d '=' -f2)
+
+case $id in
+	"nixos")
+		echo " "
+		;;
+	"arch")
+		echo " "
+		;;
+	"debian")
+		echo " "
+		;;
+	"alpine")
+		echo " "
+		;;
+esac
