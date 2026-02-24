@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+lock=" lock"
+logout="󰀄 logout"
+reboot=" reboot"
+poweroff="⏻ poweroff"
+
+choice=$(printf '%s\n%s\n%s\n%s\n' "$lock" "$logout" "$reboot" "$poweroff" | "$HOME/.local/bin/menu")
+[ "$choice" == "$lock" ] && /home/otto/.config/bin/lock
+[ "$choice" == "$logout" ] && pkill mango
+[ "$choice" == "$reboot" ] && systemctl reboot
+[ "$choice" == "$poweroff" ] && systemctl poweroff

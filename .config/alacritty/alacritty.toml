@@ -1,41 +1,12 @@
+[general]
+import = ["~/.cache/theme/alacritty.toml"]
+
 [font]
 normal = { family = "Hack Nerd Font", style = "Regular" }
 bold = { family = "Hack Nerd Font", style = "Bold" }
 italic = { family = "Hack Nerd Font", style = "Italic" }
 bold_italic = { family = "Hack Nerd Font", style = "Bold Italic" }
 size = 10
-
-[colors.primary]
-foreground = "#FFFFFF"
-background = "#2C3746"
-
-[colors.cursor]
-text = "#2C3746"
-cursor = "#FFFFFF"
-
-[colors.selection]
-text = "#2C3746"
-background = "#FFFFFF"
-
-[colors.normal]
-black = "#28333F"
-red = "#F22C57"
-green = "#28A09C"
-yellow = "#DDAB5C"
-blue = "#176EF1"
-magenta = "#AF69DD"
-cyan = "#4FB0B3"
-white = "#879596"
-
-[colors.bright]
-black = "#2B3644"
-red = "#F22C57"
-green = "#2AACAA"
-yellow = "#F7C067"
-blue = "#176EF1"
-magenta = "#CB75F7"
-cyan = "#5CC6D1"
-white = "#9CACAD"
 
 [window]
 opacity = 0.8

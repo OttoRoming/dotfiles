@@ -4,7 +4,7 @@ from glob import glob
 import os
 import json
 
-files = glob("input/**", recursive=True)
+files = glob("templates/**", recursive=True)
 files = [file for file in files if os.path.isfile(file)]
 
 theme = {}
@@ -12,7 +12,7 @@ with open("theme.json", "r") as f:
     theme = json.load(f)
 
 for file in files:
-    destination = ".config" + file.lstrip("input")
+    destination = ".cache/theme" + file.lstrip("templates")
     destination_dir = os.path.split(destination)[0]
 
     os.makedirs(destination_dir, exist_ok=True)

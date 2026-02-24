@@ -15,10 +15,10 @@
 
 window#waybar {
   /* border-radius: 8px; */
-  background: alpha(@background, 0.8);
+  background: alpha(#@background@, 0.8);
   border-width: 2px;
   border-style: solid;
-  border-color: @primary;
+  border-color: #@primary@;
 }
 
 #workspaces {
@@ -44,7 +44,7 @@ window#waybar {
 }
 
 #workspaces button.active {
-  background-color: @primary;
+  background-color: #@primary@;
 }
 
 #workspaces button.urgent {
@@ -53,7 +53,7 @@ window#waybar {
 }
 
 .modules-center {
-  color: lighter(#@primary);
+  color: lighter(#@primary@);
 }
 
 .modules-right {
@@ -77,10 +77,10 @@ window#waybar {
 }
 
 #battery.warning {
-  color: @bright_yellow;
+  color: #@bright_yellow@;
 }
 
 #battery.critical {
-  color: @bright_red;
+  color: #@bright_red@;
 }
 

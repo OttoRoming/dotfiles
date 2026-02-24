@@ -3,6 +3,7 @@
   "position": "top",
   "margin": "10 10 0 10",
   "height": 38,
+  "reload_style_on_change": true,
   "modules-left": ["ext/workspaces", "custom/btw"],
   "modules-center": ["dwl/window"],
   "modules-right": [
@@ -12,20 +13,21 @@
     "temperature",
     "memory",
     "clock",
+    "tray"
   ],
   "custom/btw": {
-    "format": " ",
+    "format": " "
   },
   "ext/workspaces": {
     "format": "{icon}",
     "ignore-hidden": true,
     "on-click": "activate",
     "on-click-right": "deactivate",
-    "sort-by-id": true,
+    "sort-by-id": true
   },
   "dwl/window": {
     "format": "{title}",
-    "max-length": 80,
+    "max-length": 80
   },
   "pulseaudio": {
     "format": "{icon} {volume}%",
@@ -39,13 +41,13 @@
       "phone": "",
       "portable": "",
       "car": " ",
-      "default": ["󰕿", "󰖀", "󰕾"],
+      "default": ["󰕿", "󰖀", "󰕾"]
     },
     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
     "on-click-middle": "pavucontrol",
     "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
     "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
-    "smooth-scrolling-threshold": 1,
+    "smooth-scrolling-threshold": 1
   },
   "backlight": {
     "device": "intel_backlight",
@@ -65,14 +67,14 @@
       "",
       "",
       "",
-      "",
-    ],
+      ""
+    ]
   },
   "battery": {
     "states": {
       "good": 95,
       "warning": 30,
-      "critical": 15,
+      "critical": 15
     },
     "format": "{icon} {capacity}%",
     "format-charging": "{icon}{capacity}%",
@@ -81,17 +83,17 @@
     "tooltip-format": "{timeTo} | {capacity} % | {power} W",
     "states": {
       "warning": 30,
-      "critical": 15,
-    },
+      "critical": 15
+    }
   },
   "temperature": {
     "format-icons": ["", "", ""],
-    "format": "{icon} {temperatureC}°C",
+    "format": "{icon} {temperatureC}°C"
   },
   "memory": {
     "interval": 30,
     "format": " {}%",
-    "max-length": 10,
+    "max-length": 10
   },
   "clock": {
     "interval": 60,
@@ -108,8 +110,12 @@
         "days": "<span color='#ecc6d9'><b>{}</b></span>",
         "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
         "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-        "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
-      },
-    },
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    }
   },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 8
+  }
 }
