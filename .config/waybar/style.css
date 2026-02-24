@@ -19,11 +19,13 @@ window#waybar {
   border-width: 2px;
   border-style: solid;
   border-color: @primary;
+  color: @foreground;
 }
 
 #workspaces {
   padding-left: 6px;
   padding-right: 8px;
+  color: @foreground;
 }
 
 #workspaces button {
@@ -31,6 +33,7 @@ window#waybar {
   background: none;
   box-shadow: inherit;
   text-shadow: inherit;
+  color: @foreground;
 
   margin-top: 5px;
   margin-bottom: 5px;
