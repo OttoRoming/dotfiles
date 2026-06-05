@@ -29,6 +29,6 @@ function y() {
   rm -f -- "$tmp"
 }
 
-fastfetch
+fastfetch -l windows
 export EDITOR=vim
 export MAKEFLAGS="-j$(nproc)"

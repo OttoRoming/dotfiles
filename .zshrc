@@ -35,5 +35,3 @@ fastfetch
 export EDITOR=vim
 export MAKEFLAGS="-j$(nproc)"
 export QT_QPA_PLATFORMTHEME=qt6ct
-
-
