@@ -56,7 +56,7 @@ window#waybar {
 }
 
 .modules-center {
-  color: lighter(@primary);
+  color: @foreground;
 }
 
 .modules-right {

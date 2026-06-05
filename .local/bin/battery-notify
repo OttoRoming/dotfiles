@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+num=$(acpi | cut -d ' ' -f4 | cut -d '%' -f1)
+
+[ "$num" -lt 15 ] && notify-send -u critical "Battery is at ${num}%"

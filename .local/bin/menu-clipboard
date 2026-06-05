@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+cliphist list | ~/.config/bin/menu | cliphist decode | wl-copy

@@ -1,0 +1,2 @@
+fusermount3 -u ~/shared
+fusermount3 -u ~/lysator

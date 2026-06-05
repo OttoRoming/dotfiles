@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+store_path="$HOME/.local/share/shared.secret"
+
+if [ -f "$store_path" ]; then
+	echo 'Decrypting password store'
+
+	store_password="$(gum input --password --placeholder='store password')"
+
+	store=$(PASS="$store_password" openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -in "$store_path" -pass env:PASS)
+
+	lysator_password=$(printf '%s' "$store" | cut -f1 -d$'\n')
+	gocryptfs_password=$(printf '%s' "$store" | cut -f2 -d$'\n')
+	
+else
+	echo 'Creating password store'
+
+	store_password="$(gum input --password --placeholder='store password')"
+
+	lysator_password="$(gum input --password --placeholder='lysator password')"
+	gocryptfs_password="$(gum input --password --placeholder='gocryptfs password')"
+
+	PASS="$store_password" openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -in <(printf '%s\n%s' "$lysator_password" "$gocryptfs_password") -out "$store_path" -pass env:PASS
+fi
+
+sshfs_source="otro@shipon.lysator.liu.se:/home/otro"
+gocryptfs_source="$HOME/lysator/shared.encrypted"
+
+sources="$(df --output=source)"
+
+if ! printf '%s' "$sources" | grep -q "$sshfs_source"; then
+	printf '%s' "$lysator_password" | sshfs "$sshfs_source" ~/lysator
+fi
+
+if ! printf '%s' "$sources" | grep -q "$gocryptfs_source"; then
+	printf '%s' "$gocryptfs_password" | gocryptfs "$gocryptfs_source" ~/shared
+fi
+
+
