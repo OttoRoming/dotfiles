@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+pwmenu --interactive -l custom --launcher-command /home/otto/.config/bin/menu

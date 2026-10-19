@@ -6,6 +6,7 @@ export MOZ_USE_XINPUT2=1
 
 # export PATH="~/.cargo/bin/:${PATH}"
 export PATH="$HOME/.config/bin/:${PATH}"
+export PATH="$HOME/.local/bin/:${PATH}"
 export PATH="$HOME/go/bin/:${PATH}"
 
 alias w++='g++ -std=c++17 -Wall -Wextra -Wpedantic -Weffc++ -Wold-style-cast -g'
@@ -17,7 +18,7 @@ alias mv='mv -v'
 alias chmod='chmod -v'
 
 # pretty commands
-alias ls='eza --icons'
+alias ls='eza --icons=always'
 
 # alias lysfs='sshfs otro@volton.lysator.liu.se:/home/otro ~/lysator'
 alias volton='ssh otro@volton.lysator.liu.se'

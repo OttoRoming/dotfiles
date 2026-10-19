@@ -33,7 +33,7 @@ if ! printf '%s' "$sources" | grep -q "$sshfs_source"; then
 fi
 
 if ! printf '%s' "$sources" | grep -q "$gocryptfs_source"; then
-	printf '%s' "$gocryptfs_password" | gocryptfs "$gocryptfs_source" ~/shared
+	printf '%s' "$gocryptfs_password" | gocryptfs -allow_other -force_owner 1000:1000 "$gocryptfs_source" ~/shared
 fi
 
 

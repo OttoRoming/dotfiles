@@ -34,6 +34,7 @@ vim.g.maplocalleader = ' '
 
 vim.keymap.set('n', '<leader>bn', ':bnext<CR>')
 vim.keymap.set('n', '<leader>bp', ':bprevious<CR>')
+vim.keymap.set('n', '<leader>bk', ':bdelete<CR>')
 
 vim.keymap.set('n', 'gh', vim.lsp.buf.hover)
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
@@ -61,6 +62,11 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     callback = function()
         vim.lsp.buf.format()
     end,
+})
+
+vim.api.nvim_create_autocmd("VimResized", {
+    pattern = "*",
+    command = "wincmd =",
 })
 
 -- Plugins
@@ -105,12 +111,10 @@ vim.pack.add({
     'https://github.com/petertriho/nvim-scrollbar',
 
     -- Git
-    'https://github.com/lewis6991/gitsigns.nvim'
+    'https://github.com/lewis6991/gitsigns.nvim',
 
-    -- {
-    --     src = 'https://github.com/nvim-treesitter/nvim-treesitter',
-    --     version = 'master',
-    -- }
+    -- AI
+    -- 'https://github.com/github/copilot.vim',
 })
 
 
@@ -167,9 +171,9 @@ require('tokyonight').setup()
 
 vim.cmd('colorscheme tokyonight')
 
-vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none' })
+-- vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+-- vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none' })
+-- vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none' })
 
 
 -- Syntax highlight config
