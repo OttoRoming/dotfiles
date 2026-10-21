@@ -2,12 +2,30 @@
 # ~/.bashrc
 #
 
-# If not running interactively, don't do anything
+# Configure fnm for alpine
+eval "$(fnm env --shell bash)"
+export FNM_NODE_DIST_MIRROR=https://unofficial-builds.nodejs.org/download/release
+export FNM_ARCH=x64-musl
+
+export PATH="$HOME/go/bin:$PATH"
+
+. "$HOME/.cargo/env"
+
+# If not running interactively, don't do more
 [[ $- != *i* ]] && return
 
 # Replace GNU with Rust
 alias ls='eza --icons=auto'
 alias cat='bat -pp'
+
+# Verbose
+alias cp='cp -v'
+alias mv='mv -v'
+alias rm='rm -v'
+alias ln='ln -v'
+alias rmdir='rmdir -v'
+alias chmod='chmod -v'
+alias chown='chown -v'
 
 # Colorize GNU 
 alias dir='dir --color=auto'
@@ -17,13 +35,17 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias grep='grep --color=auto'
 
-alias sudo='sudo-rs'
-alias doas='sudo-rs'
+alias doas='sudo'
+alias vim='nvim'
+
+alias shared='sshfs shipon:/home/otro /mnt/lysator; gocryptfs /mnt/lysator/shared.encrypted /mnt/shared'
 
 PS1='[\u@\h \W]\$ '
 
 export MOZ_USE_XINPUT2=1
-export EDITOR=vim
+export QT_QPA_PLATFORMTHEME=qt5ct:qt6ct
+
+export EDITOR=nvim
 export MAKEFLAGS="-j$(nproc)"
 
 __prompt_command() {
@@ -45,8 +67,6 @@ __prompt_command() {
 PROMPT_COMMAND=__prompt_command
 
 
-# export PATH="~/.cargo/bin/:${PATH}"
-# export PATH="~/.config/bin/:${PATH}"
 alias w++='g++ -std=c++17 -Wall -Wextra -Wpedantic -Weffc++ -Wold-style-cast -g'
 
 function y() {
@@ -65,5 +85,6 @@ function f() {
 
 [[ -r /usr/share/bash-completion/bash_completion ]] && \
   . /usr/share/bash-completion/bash_completion
+
 
 fastfetch

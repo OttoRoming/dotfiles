@@ -41,10 +41,11 @@ vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
 vim.keymap.set('n', 'gD', vim.lsp.buf.declaration)
 vim.keymap.set('n', 'gr', vim.lsp.buf.references)
 vim.keymap.set('n', 'gl', vim.diagnostic.open_float)
-vim.keymap.set('n', '<F2>', vim.lsp.buf.rename)
-vim.keymap.set('n', '<F4>', vim.lsp.buf.code_action)
+vim.keymap.set('n', '<leader>lr', vim.lsp.buf.rename)
+vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
+vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action)
 
-vim.keymap.set("n", '<F3>',
+vim.keymap.set("n", '<leader>li',
     function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end
@@ -58,12 +59,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
-vim.api.nvim_create_autocmd('BufWritePre', {
-    callback = function()
-        vim.lsp.buf.format()
-    end,
-})
-
 vim.api.nvim_create_autocmd("VimResized", {
     pattern = "*",
     command = "wincmd =",
@@ -74,6 +69,7 @@ vim.pack.add({
     -- Theme
     'https://github.com/Shatur/neovim-ayu',
     'https://github.com/folke/tokyonight.nvim',
+    'https://github.com/ellisonleao/gruvbox.nvim',
 
     -- Mini deps
     'https://github.com/nvim-mini/mini.icons',
@@ -100,6 +96,7 @@ vim.pack.add({
     'https://github.com/mason-org/mason.nvim',
     'https://github.com/mason-org/mason-lspconfig.nvim',
     'https://github.com/folke/lazydev.nvim',
+    'https://github.com/j-hui/fidget.nvim',
 
     -- Syntax highlighting
     'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
@@ -112,6 +109,12 @@ vim.pack.add({
 
     -- Git
     'https://github.com/lewis6991/gitsigns.nvim',
+
+    -- Which key
+    'https://github.com/folke/which-key.nvim',
+
+    -- Oil
+    'https://github.com/stevearc/oil.nvim',
 
     -- AI
     -- 'https://github.com/github/copilot.vim',
@@ -157,10 +160,12 @@ require('mini.statusline').setup()
 require('mini.tabline').setup()
 
 -- LSP Config
-
 require('mason').setup()
-require('mason-lspconfig').setup()
+require('mason-lspconfig').setup({
+    automatic_enable = true
+})
 require('lazydev').setup()
+require('fidget').setup({})
 
 -- Theme config
 require('ayu').setup({
@@ -168,8 +173,9 @@ require('ayu').setup({
     terminal = true, -- Set to `false` to let terminal manage its own colors.
 })
 require('tokyonight').setup()
+require('gruvbox').setup()
 
-vim.cmd('colorscheme tokyonight')
+vim.cmd('colorscheme gruvbox')
 
 -- vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
 -- vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none' })
@@ -191,3 +197,9 @@ require("scrollbar").setup()
 require('gitsigns').setup({
     current_line_blame = true
 })
+
+-- Which key
+require('which-key').setup()
+
+-- Oil
+require('oil').setup()
