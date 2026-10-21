@@ -1,5 +1,5 @@
 vim.opt.number = true
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 6
 vim.opt.sidescrolloff = 8
 
 -- Tabs
@@ -105,7 +105,7 @@ vim.pack.add({
     'https://github.com/windwp/nvim-autopairs',
 
     -- Scrollbar
-    'https://github.com/petertriho/nvim-scrollbar',
+    'https://github.com/mihovilrak/scroll.nvim',
 
     -- Git
     'https://github.com/lewis6991/gitsigns.nvim',
@@ -115,11 +115,12 @@ vim.pack.add({
 
     -- Oil
     'https://github.com/stevearc/oil.nvim',
+    'https://github.com/refractalize/oil-git-status.nvim',
+    'https://github.com/JezerM/oil-lsp-diagnostics.nvim'
 
     -- AI
     -- 'https://github.com/github/copilot.vim',
 })
-
 
 -- Mini deps config
 local icons = require('mini.icons')
@@ -191,7 +192,14 @@ vim.cmd('colorscheme gruvbox')
 require("nvim-autopairs").setup()
 
 -- Scroll bar config
-require("scrollbar").setup()
+require("scroll").setup({
+    enabled = true,
+
+    vertical = {
+        enabled = true,
+        width = 2,
+    }
+})
 
 -- Git config
 require('gitsigns').setup({
@@ -202,4 +210,13 @@ require('gitsigns').setup({
 require('which-key').setup()
 
 -- Oil
-require('oil').setup()
+require('oil').setup({
+  win_options = {
+    signcolumn = "yes:2", -- for oil-git-status
+  },
+})
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
+require('oil-git-status').setup()
+require('oil-lsp-diagnostics').setup()
+
