@@ -71,6 +71,9 @@ vim.pack.add({
     'https://github.com/folke/tokyonight.nvim',
     'https://github.com/ellisonleao/gruvbox.nvim',
 
+    -- Treesitter
+    'https://github.com/nvim-treesitter/nvim-treesitter',
+
     -- Mini deps
     'https://github.com/nvim-mini/mini.icons',
     'https://github.com/nvim-mini/mini.snippets',
@@ -162,6 +165,7 @@ require('mini.tabline').setup()
 
 -- LSP Config
 require('mason').setup()
+
 require('mason-lspconfig').setup({
     automatic_enable = true
 })
@@ -178,15 +182,22 @@ require('gruvbox').setup()
 
 vim.cmd('colorscheme gruvbox')
 
--- vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
--- vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none' })
--- vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none' })
+-- -- Treesitter
+-- -- NOTE: 'stable' is a parser *tier* (only ~10 parsers), not "all common
+-- -- languages" -- javascript/typescript live in the 'unstable' tier.
+-- -- 'all' expands to every parser nvim-treesitter knows about (300+), so the
+-- -- first launch spends a while downloading and compiling in the background.
+-- require('nvim-treesitter').install({ 'all' })
 
-
--- Syntax highlight config
--- require('nvim-treesitter').setup({
---     ensure_installed = 'all'
--- })
+vim.api.nvim_create_autocmd('FileType', {
+    callback = function(args)
+        local lang = vim.treesitter.language.get_lang(args.match)
+        if not lang then
+            return
+        end
+        pcall(vim.treesitter.start, args.buf, lang)
+    end,
+})
 
 -- Auto pairs config
 require("nvim-autopairs").setup()
@@ -211,12 +222,11 @@ require('which-key').setup()
 
 -- Oil
 require('oil').setup({
-  win_options = {
-    signcolumn = "yes:2", -- for oil-git-status
-  },
+    win_options = {
+        signcolumn = "yes:2", -- for oil-git-status
+    },
 })
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 require('oil-git-status').setup()
 require('oil-lsp-diagnostics').setup()
-
