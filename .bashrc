@@ -4,7 +4,7 @@
 
 # Configure fnm for alpine
 eval "$(fnm env --shell bash)"
-export FNM_NODE_DIST_MIRROR=https://unofficial-builds.nodejs.org/download/release
+# export FNM_NODE_DIST_MIRROR=https://unofficial-builds.nodejs.org/download/release
 export FNM_ARCH=x64-musl
 
 export PATH="$HOME/go/bin:$PATH"
@@ -77,9 +77,9 @@ function y() {
   rm -f -- "$tmp"
 }
 
-function f() {
+function s() {
 	local proc="$1"
-	"$proc" "$(fzf)"
+	"$proc" "$(sks)"
 }
 
 
@@ -88,3 +88,7 @@ function f() {
 
 
 fastfetch
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

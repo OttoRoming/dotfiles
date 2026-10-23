@@ -73,6 +73,7 @@ vim.pack.add({
 
     -- Treesitter
     'https://github.com/nvim-treesitter/nvim-treesitter',
+    'https://github.com/davidmh/mdx.nvim',
 
     -- Mini deps
     'https://github.com/nvim-mini/mini.icons',

@@ -1,0 +1,51 @@
+/* GTK 4 client-side window decorations.
+ *
+ * GTK 3 leaves window frames to the compositor, while GTK 4 draws them
+ * itself. This is the GTK 4 counterpart of the decoration stylesheet that
+ * gtk-3.0/gtk.css imports; the colours come from the generated
+ * gtk-colors.css palette.
+ */
+
+window.csd {
+  background-color: @background;
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 1px alpha(@foreground, 0.10),
+    0 6px 20px 2px alpha(@black, 0.55);
+}
+
+window.csd:backdrop {
+  box-shadow:
+    0 0 0 1px alpha(@foreground, 0.06),
+    0 4px 12px 2px alpha(@black, 0.35);
+}
+
+window.maximized,
+window.fullscreen,
+window.tiled {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+headerbar,
+.titlebar {
+  background-color: @background;
+  color: @foreground;
+  border-bottom: 1px solid alpha(@foreground, 0.10);
+}
+
+headerbar:backdrop,
+.titlebar:backdrop {
+  background-color: @background;
+  color: @bright_black;
+  border-bottom-color: alpha(@foreground, 0.06);
+}
+
+/* Breeze paints selection-mode header bars blue; keep that distinction
+ * instead of flattening them to the normal header bar colour. */
+headerbar.selection-mode,
+headerbar.selection-mode headerbar,
+.titlebar.selection-mode {
+  background-color: @blue;
+  color: @bright_white;
+}
