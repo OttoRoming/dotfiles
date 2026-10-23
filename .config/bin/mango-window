@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+"""Stream the focused window title from the mango compositor to waybar."""
+
+import json
+import subprocess
+import sys
+import time
+
+
+def stream() -> int:
+    while True:
+        try:
+            proc = subprocess.Popen(
+                ["mmsg", "watch", "focusing-client"],
+                stdout=subprocess.PIPE,
+                text=True,
+            )
+        except FileNotFoundError:
+            print("mango-window: mmsg not found", file=sys.stderr)
+            return 1
+
+        try:
+            assert proc.stdout is not None
+            for line in proc.stdout:
+                try:
+                    title = json.loads(line).get("title") or ""
+                except (json.JSONDecodeError, AttributeError):
+                    continue
+                # waybar reads one line per update, and extra lines become a
+                # tooltip; keep the title on a single line.
+                print(title.replace("\r", " ").replace("\n", " "), flush=True)
+        except BrokenPipeError:
+            # Waybar exited.
+            return 0
+        except KeyboardInterrupt:
+            return 0
+        finally:
+            proc.terminate()
+            try:
+                proc.wait(timeout=1)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+
+        # mmsg stopped (for example because the compositor restarted).
+        time.sleep(1)
+
+
+if __name__ == "__main__":
+    sys.exit(stream())

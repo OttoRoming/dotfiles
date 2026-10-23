@@ -1,8 +1,7 @@
 /* GTK 4 theme overrides, mirroring ~/.config/gtk-3.0/gtk.css.
  *
- * The palette is generated from theme.json by process.py, so it stays in
- * sync with the other themed applications. The GTK 3 file imported a local
- * colors.css; GTK 4 reads the shared generated copy instead.
+ * The palette is generated from theme.json by process.py and shared by
+ * waybar, GTK 3 and GTK 4, so every GTK application uses the same colours.
  */
-@import '../../.cache/theme/gtk-colors.css';
+@import '../../.cache/theme/colors.css';
 @import 'window_decorations.css';
