@@ -192,6 +192,10 @@ vim.cmd('colorscheme gruvbox')
 
 vim.api.nvim_create_autocmd('FileType', {
     callback = function(args)
+        if args.match == 'mdx' then -- handled by mdx plugin
+            return
+        end
+
         local lang = vim.treesitter.language.get_lang(args.match)
         if not lang then
             return

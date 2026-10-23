@@ -78,7 +78,7 @@ function y() {
 
 function s() {
 	local proc="$1"
-	"$proc" "$(sks)"
+	"$proc" "$(sk)"
 }
 
 
