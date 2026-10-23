@@ -4,12 +4,11 @@
 
 # Configure fnm for alpine
 eval "$(fnm env --shell bash)"
-export FNM_NODE_DIST_MIRROR=https://unofficial-builds.nodejs.org/download/release
-export FNM_ARCH=x64-musl
+[[ "$(gcc -dumpmachine)" == 'x86_64-unknown-linux-gnu' ]] && export FNM_ARCH=x64-musl
 
 export PATH="$HOME/go/bin:$PATH"
 
-. "$HOME/.cargo/env"
+[[ -z "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
 # If not running interactively, don't do more
 [[ $- != *i* ]] && return
