@@ -3,7 +3,7 @@
 #
 
 # Configure fnm for alpine
-eval "$(fnm env --shell bash)"
+type fnm &> /dev/null && eval "$(fnm env --shell bash)"
 [[ "$(gcc -dumpmachine)" == 'x86_64-unknown-linux-gnu' ]] && export FNM_ARCH=x64-musl
 
 export PATH="$HOME/go/bin:$PATH"
@@ -86,7 +86,7 @@ function s() {
   . /usr/share/bash-completion/bash_completion
 
 
-fastfetch
+type fastfetch &> /dev/null && fastfetch
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
