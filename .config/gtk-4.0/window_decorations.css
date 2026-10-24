@@ -2,8 +2,8 @@
  *
  * GTK 3 leaves window frames to the compositor, while GTK 4 draws them
  * itself. This is the GTK 4 counterpart of the decoration stylesheet that
- * gtk-3.0/gtk.css imports; the colours come from the generated
- * gtk-colors.css palette.
+ * gtk-3.0/gtk.css imports; the colours come from the generated colors.css
+ * palette.
  */
 
 window.csd {

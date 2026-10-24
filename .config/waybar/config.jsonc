@@ -5,7 +5,7 @@
   "height": 38,
   "reload_style_on_change": true,
   "modules-left": ["ext/workspaces"],
-  "modules-center": ["dwl/window"],
+  "modules-center": ["custom/window"],
   "modules-right": [
     "pulseaudio",
     "backlight",
@@ -27,9 +27,17 @@
     "on-click-right": "deactivate",
     "sort-by-id": true
   },
-  "dwl/window": {
-    "format": "{title}",
-    "max-length": 80
+  // mangowm does not speak dwl's IPC protocol, so waybar's dwl/window module
+  // dereferences an unbound object and segfaults. mango/window would be the
+  // native replacement, but it needs a waybar built with mango support
+  // (Alpine's 0.15.0 is not). Stream the title from mango's IPC instead.
+  "custom/window": {
+    "format": "{}",
+    "exec": "~/.config/bin/mango-window",
+    "escape": true,
+    "max-length": 80,
+    "restart-interval": 5,
+    "tooltip": false
   },
   "pulseaudio": {
     "format": "{icon} {volume}%",
@@ -82,11 +90,7 @@
     "format-charging": "{icon}{capacity}%",
     "format-full": "{icon}",
     "format-icons": ["󰁻", "󰁼", "󰁾", "󰂀", "󰂂", "󰁹"],
-    "tooltip-format": "{timeTo} | {capacity} % | {power} W",
-    "states": {
-      "warning": 30,
-      "critical": 15
-    }
+    "tooltip-format": "{timeTo} | {capacity} % | {power} W"
   },
   "temperature": {
     "format-icons": ["", "", ""],

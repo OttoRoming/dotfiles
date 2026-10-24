@@ -1,2 +1,7 @@
-@import 'colors.css';
-@import 'window_decorations.css';
+/* GTK 3 theme overrides.
+ *
+ * The palette is generated from theme.json by process.py and shared with
+ * waybar and GTK 4. GTK 3 leaves window frames to the compositor, so there
+ * is no window decoration stylesheet to import here.
+ */
+@import '../../.cache/theme/colors.css';
