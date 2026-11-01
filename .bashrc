@@ -15,7 +15,9 @@ export PATH="$HOME/go/bin:$PATH"
 
 # Replace GNU with Rust
 alias ls='eza --icons=auto'
+alias tree='eza -T --icons=auto'
 alias cat='bat -pp'
+alias man='batman'
 
 # Verbose
 alias cp='cp -v'
