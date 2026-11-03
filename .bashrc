@@ -81,6 +81,19 @@ function s() {
 	"$proc" "$(sk)"
 }
 
+tunnel() {
+    local host="${1}"
+    local port="${2}"
+
+    if [[ -z "$host" || -z "$port" ]]; then
+        echo "Användning: tunnel <host> <port>" >&2
+        return 1
+    fi
+
+    echo "Sätter upp tunnel: Lokala porten $port -> $host:$port"
+    ssh -4 -L "${port}:127.0.0.1:${port}" -N -f "$host"
+}
+
 
 [[ -r /usr/share/bash-completion/bash_completion ]] && \
   . /usr/share/bash-completion/bash_completion
