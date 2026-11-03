@@ -81,7 +81,6 @@ vim.pack.add({
 
     -- Mini text editing
     'https://github.com/nvim-mini/mini.comment',
-    'https://github.com/nvim-mini/mini.completion',
     'https://github.com/nvim-mini/mini.move',
 
     -- Mini workflow
@@ -95,18 +94,18 @@ vim.pack.add({
     'https://github.com/nvim-mini/mini.statusline',
     'https://github.com/nvim-mini/mini.tabline',
 
+    -- blink
+    'https://github.com/saghen/blink.lib',
+    'https://github.com/rafamadriz/friendly-snippets',
+    'https://github.com/saghen/blink.cmp',
+    'https://github.com/saghen/blink.pairs',
+
     -- LSP
     'https://github.com/neovim/nvim-lspconfig',
     'https://github.com/mason-org/mason.nvim',
     'https://github.com/mason-org/mason-lspconfig.nvim',
     'https://github.com/folke/lazydev.nvim',
     'https://github.com/j-hui/fidget.nvim',
-
-    -- Syntax highlighting
-    'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
-
-    -- Autopairs
-    'https://github.com/windwp/nvim-autopairs',
 
     -- Scrollbar
     'https://github.com/mihovilrak/scroll.nvim',
@@ -122,6 +121,8 @@ vim.pack.add({
     'https://github.com/refractalize/oil-git-status.nvim',
     'https://github.com/JezerM/oil-lsp-diagnostics.nvim'
 
+    -- 'https://github.com/obsidian-nvim/obsidian.nvim'
+
     -- AI
     -- 'https://github.com/github/copilot.vim',
 })
@@ -135,7 +136,6 @@ require('mini.snippets').setup()
 
 -- Mini text editing config
 require('mini.comment').setup()
-require('mini.completion').setup()
 require('mini.move').setup()
 
 -- Mini workflow config
@@ -163,6 +163,20 @@ hipatterns.setup({
 require('mini.indentscope').setup()
 require('mini.statusline').setup()
 require('mini.tabline').setup()
+
+-- Blink
+local cmp = require('blink.cmp')
+cmp.build():pwait()
+cmp.setup({
+    keymap = { preset = 'default' },
+    completion = { documentation = { auto_show = true } },
+    sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
+    fuzzy = { implementation = "rust" }
+})
+
+local pairs = require('blink.pairs')
+pairs.build():pwait()
+pairs.setup()
 
 -- LSP Config
 require('mason').setup()
@@ -204,9 +218,6 @@ vim.api.nvim_create_autocmd('FileType', {
     end,
 })
 
--- Auto pairs config
-require("nvim-autopairs").setup()
-
 -- Scroll bar config
 require("scroll").setup({
     enabled = true,
@@ -233,5 +244,18 @@ require('oil').setup({
 })
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
-require('oil-git-status').setup()
+require('oil-git-status').setup({})
 require('oil-lsp-diagnostics').setup()
+
+-- require('obsidian').setup({
+--     legacy_commands = false, -- silcene warning
+--     picker = {
+--         name = 'mini.pick'
+--     },
+--     workspaces = {
+--         {
+--             name = 'vault',
+--             path = '~/shared/vault'
+--         }
+--     }
+-- })

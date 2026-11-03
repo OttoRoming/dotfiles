@@ -3,7 +3,7 @@
 #
 
 # Configure fnm for alpine
-eval "$(fnm env --shell bash)"
+type fnm &> /dev/null && eval "$(fnm env --shell bash)"
 [[ "$(gcc -dumpmachine)" == 'x86_64-unknown-linux-gnu' ]] && export FNM_ARCH=x64-musl
 
 export PATH="$HOME/go/bin:$PATH"
@@ -15,7 +15,9 @@ export PATH="$HOME/go/bin:$PATH"
 
 # Replace GNU with Rust
 alias ls='eza --icons=auto'
+alias tree='eza -T --icons=auto'
 alias cat='bat -pp'
+alias man='batman'
 
 # Verbose
 alias cp='cp -v'
@@ -99,8 +101,9 @@ tunnel() {
   . /usr/share/bash-completion/bash_completion
 
 
-fastfetch
+type fastfetch &> /dev/null && fastfetch
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$PATH:$HOME/.pub-cache/bin"
