@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Run opencode with its mutable state on local disk.
+#
+# $HOME lives on NFS here. opencode keeps its sessions in a SQLite database
+# (WAL mode, POSIX locking), and SQLite corrupts on NFS: the DB ended up
+# reporting "database disk image is malformed" and HTTP 500s. Point
+# DATA/STATE/CACHE at the local ZFS pool instead; the binary and its
+# configuration (~/.config/opencode) are left where they are.
+set -uo pipefail
+
+root="${OPENCODE_LOCAL_ROOT:-}"
+if [ -z "$root" ]; then
+	user="$(id -un)"
+	# Local filesystems only: /scratch is the big scratch pool, then /var/tmp and /tmp.
+	for candidate in "/scratch/$user/opencode" "/var/tmp/opencode-$user" "/tmp/opencode-$user"; do
+		mkdir -p "$candidate" 2>/dev/null || continue
+		[ -w "$candidate" ] || continue
+		root="$candidate"
+		break
+	done
+fi
+
+if [ -n "$root" ] && mkdir -p "$root/data" "$root/state" "$root/cache" 2>/dev/null; then
+	export XDG_DATA_HOME="$root/data"
+	export XDG_STATE_HOME="$root/state"
+	export XDG_CACHE_HOME="$root/cache"
+fi
+
+# Resolve the real binary, skipping this wrapper's own directory.
+self_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+real=""
+IFS=: read -r -a dirs <<<"$PATH"
+for dir in "${dirs[@]}"; do
+	[ -n "$dir" ] || continue
+	[ "$(cd -- "$dir" 2>/dev/null && pwd -P)" = "$self_dir" ] && continue
+	if [ -x "$dir/opencode" ]; then
+		real="$dir/opencode"
+		break
+	fi
+done
+
+if [ -z "$real" ]; then
+	echo "opencode: could not find the real opencode binary on PATH" >&2
+	exit 127
+fi
+
+exec "$real" "$@"
