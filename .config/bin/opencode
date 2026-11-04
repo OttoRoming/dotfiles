@@ -8,6 +8,10 @@
 # configuration (~/.config/opencode) are left where they are.
 set -uo pipefail
 
+# /scratch is world-writable and holds sessions, prompts and logs: keep
+# everything this user creates there private (dirs 700, files 600).
+umask 077
+
 root="${OPENCODE_LOCAL_ROOT:-}"
 if [ -z "$root" ]; then
 	user="$(id -un)"
@@ -18,6 +22,11 @@ if [ -z "$root" ]; then
 		root="$candidate"
 		break
 	done
+fi
+
+if [ -n "$root" ]; then
+	# Lock the root even if it already existed with looser permissions.
+	chmod 700 "$root" 2>/dev/null || true
 fi
 
 if [ -n "$root" ] && mkdir -p "$root/data" "$root/state" "$root/cache" 2>/dev/null; then
