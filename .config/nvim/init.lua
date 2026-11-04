@@ -119,9 +119,9 @@ vim.pack.add({
     -- Oil
     'https://github.com/stevearc/oil.nvim',
     'https://github.com/refractalize/oil-git-status.nvim',
-    'https://github.com/JezerM/oil-lsp-diagnostics.nvim'
+    'https://github.com/JezerM/oil-lsp-diagnostics.nvim',
 
-    -- 'https://github.com/obsidian-nvim/obsidian.nvim'
+    'https://github.com/obsidian-nvim/obsidian.nvim'
 
     -- AI
     -- 'https://github.com/github/copilot.vim',
@@ -255,7 +255,7 @@ require('oil-lsp-diagnostics').setup()
 --     workspaces = {
 --         {
 --             name = 'vault',
---             path = '~/shared/vault'
+--             path = '/mnt/shared/vault'
 --         }
 --     }
 -- })
