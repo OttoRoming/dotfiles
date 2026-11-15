@@ -1,0 +1,190 @@
+#!/usr/bin/env bash
+# liu-rdp – öppna en .rdp-fil (t.ex. nedladdad från rdpklienter.edu.liu.se)
+# med FreeRDP (xfreerdp). Startas automatiskt i en terminal så att
+# lösenordsfrågan syns, även om filen öppnas med dubbelklick.
+#
+# Användning:
+#   liu-rdp fil.rdp          anslut enligt .rdp-filen
+#   liu-rdp fil.rdp --dry    visa bara kommandot som skulle köras
+#
+# Miljövariabler:
+#   LIU_RDP_KBD   tangentbordslayout (default 0x0000041d = svensk)
+#   LIU_RDP_EXTRA extra flaggor till xfreerdp, t.ex. "/size:1920x1080"
+
+set -uo pipefail
+
+PROG=${0##*/}
+KBD=${LIU_RDP_KBD:-0x0000041d}
+DRY=0
+IN_TERM=0
+FILE=""
+HOST_ARG=""
+
+for arg in "$@"; do
+    case $arg in
+    --dry | --print) DRY=1 ;;
+    --in-terminal) IN_TERM=1 ;;
+    -h | --help)
+        sed -n '2,12p' "$0" | sed 's/^# \{0,1\}//'
+        exit 0
+        ;;
+    *)
+        if [ -z "$FILE" ]; then FILE=$arg; fi
+        ;;
+    esac
+done
+
+if [ -z "$FILE" ]; then
+    echo "Användning: $PROG <fil.rdp>" >&2
+    exit 2
+fi
+
+# Tillåt även att man anger ett värdnamn direkt.
+if [ ! -r "$FILE" ]; then
+    case $FILE in
+    *.*) HOST_ARG=$FILE ;;
+    *)
+        echo "$PROG: hittar inte filen '$FILE'" >&2
+        exit 2
+        ;;
+    esac
+fi
+
+# ---- läs .rdp-filen (INI-format, skiftlägesokänsligt) ----
+rdp_get() {
+    awk -v key="$1" '
+        { sub(/\r$/, "") }
+        BEGIN { k = tolower(key) }
+        tolower(substr($0, 1, length(k))) == k && substr($0, length(k) + 1, 1) == ":" {
+            n = split($0, p, ":")     # nyckel:typ:värde
+            v = p[3]
+            for (i = 4; i <= n; i++) v = v ":" p[i]
+            gsub(/^[ \t]+|[ \t]+$/, "", v)
+            print v
+            exit
+        }' "$FILE"
+}
+
+HOST=${HOST_ARG:-}
+PORT=""
+USER_NAME=""
+DOMAIN=""
+GATEWAY=""
+GATEWAY_USER=""
+GATEWAY_DOMAIN=""
+
+if [ -z "$HOST_ARG" ]; then
+    ADDR=$(rdp_get "full address")
+    [ -n "$ADDR" ] || ADDR=$(rdp_get "alternate full address")
+    [ -n "$ADDR" ] || ADDR=$(rdp_get "full address")
+    if [ -z "$ADDR" ]; then
+        echo "$PROG: hittade ingen 'full address' i $FILE" >&2
+        exit 1
+    fi
+    # host:port (IPv6 hoppas vi slippa i .rdp-filer)
+    if [[ $ADDR == *:* ]]; then
+        HOST=${ADDR%:*}
+        PORT=${ADDR##*:}
+    else
+        HOST=$ADDR
+    fi
+    USER_NAME=$(rdp_get "username")
+    DOMAIN=$(rdp_get "domain")
+    GATEWAY=$(rdp_get "gatewayhostname")
+    GATEWAY_USER=$(rdp_get "gatewayusername")
+    GATEWAY_DOMAIN=$(rdp_get "gatewaydomain")
+fi
+
+# "DOMÄN\användare" -> separera
+if [[ $USER_NAME == *\\* ]]; then
+    DOMAIN=${USER_NAME%%\\*}
+    USER_NAME=${USER_NAME#*\\}
+fi
+if [[ $GATEWAY_USER == *\\* ]]; then
+    GATEWAY_DOMAIN=${GATEWAY_USER%%\\*}
+    GATEWAY_USER=${GATEWAY_USER#*\\}
+fi
+
+# ---- hitta klient (Alpine döper binären till xfreerdp3) ----
+CLIENT=""
+for c in "${LIU_RDP_CLIENT:-}" xfreerdp xfreerdp3 wlfreerdp3; do
+    [ -n "$c" ] && command -v "$c" >/dev/null && { CLIENT=$c; break; }
+done
+
+# ---- bygg kommandoraden ----
+CMD=("${CLIENT:-xfreerdp3}")
+CMD+=("/v:$HOST")
+[ -n "$PORT" ] && CMD+=("/port:$PORT")
+[ -n "$USER_NAME" ] && CMD+=("/u:$USER_NAME")
+[ -n "$DOMAIN" ] && CMD+=("/d:$DOMAIN")
+if [ -n "$GATEWAY" ]; then
+    # FreeRDP 3-syntax: /gateway:g:<host>[,u:<user>][,d:<domain>]
+    gw="/gateway:g:$GATEWAY"
+    [ -n "$GATEWAY_USER" ] && gw+=",u:$GATEWAY_USER"
+    gw_dom=${GATEWAY_DOMAIN:-$DOMAIN}
+    [ -n "$gw_dom" ] && gw+=",d:$gw_dom"
+    [ -n "${LIU_RDP_GW_TYPE:-}" ] && gw+=",type:$LIU_RDP_GW_TYPE"
+    CMD+=("$gw")
+fi
+CMD+=(
+    "/kbd:layout:$KBD"
+    "/cert:ignore"
+    "+dynamic-resolution"
+    "+clipboard"
+    "/network:auto"
+)
+# shellcheck disable=SC2206
+[ -n "${LIU_RDP_EXTRA:-}" ] && CMD+=($LIU_RDP_EXTRA)
+
+if [ "$DRY" = 1 ]; then
+    printf '%q ' "${CMD[@]}"
+    echo
+    exit 0
+fi
+
+if [ -z "$CLIENT" ]; then
+    msg="RDP-klienten saknas. Installera med: sudo apk add freerdp"
+    echo "$msg" >&2
+    if [ "$IN_TERM" = 1 ]; then
+        printf '\n%s\n' "$msg"
+        read -r -p "Tryck Enter för att stänga..." _
+    elif [ -n "${WAYLAND_DISPLAY:-}${DISPLAY:-}" ] && command -v notify-send >/dev/null; then
+        notify-send "LiU RDP" "$msg" 2>/dev/null || true
+    fi
+    exit 127
+fi
+
+if ! "$CLIENT" /version >/dev/null 2>&1; then
+    msg="$CLIENT startar inte (oftast saknad krb5-libs). Kör: sudo apk add krb5-libs"
+    echo "$msg" >&2
+    if [ "$IN_TERM" = 1 ]; then
+        printf '\n%s\n' "$msg"
+        read -r -p "Tryck Enter för att stänga..." _
+    fi
+    exit 127
+fi
+
+# Utan terminal (t.ex. dubbelklick i filhanteraren) startar vi om i foot,
+# så att lösenordsfrågan syns.
+if [ "$IN_TERM" = 0 ] && [ ! -t 0 ] && [ ! -t 1 ]; then
+    if [ -n "${WAYLAND_DISPLAY:-}${DISPLAY:-}" ]; then
+        for term in foot alacritty xterm; do
+            if command -v "$term" >/dev/null; then
+                case $term in
+                foot) exec "$term" -T "LiU RDP – $HOST" -a liu-rdp -- "$0" --in-terminal "$FILE" ;;
+                *) exec "$term" -T "LiU RDP – $HOST" -e "$0" --in-terminal "$FILE" ;;
+                esac
+            fi
+        done
+    fi
+fi
+
+echo "Ansluter till $HOST${PORT:+:$PORT}${USER_NAME:+ som $DOMAIN\\$USER_NAME} …"
+"${CMD[@]}"
+rc=$?
+
+if [ "$IN_TERM" = 1 ]; then
+    [ $rc -ne 0 ] && echo $'\nAnslutningen avslutades med fel (kod '"$rc"').'
+    read -r -p "Tryck Enter för att stänga..." _
+fi
+exit $rc
