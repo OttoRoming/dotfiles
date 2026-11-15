@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-cliphist list | ~/.config/bin/menu | cliphist decode | wl-copy
+cliphist list | "$HOME/.local/bin/menu" | cliphist decode | wl-copy
