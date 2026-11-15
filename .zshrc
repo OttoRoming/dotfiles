@@ -5,7 +5,6 @@ PS1='[\u@\h \W]\$ '
 export MOZ_USE_XINPUT2=1
 
 # export PATH="~/.cargo/bin/:${PATH}"
-export PATH="$HOME/.config/bin/:${PATH}"
 export PATH="$HOME/.local/bin/:${PATH}"
 export PATH="$HOME/go/bin/:${PATH}"
 
