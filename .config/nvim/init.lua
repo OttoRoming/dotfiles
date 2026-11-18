@@ -28,6 +28,9 @@ vim.opt.autowrite = true
 -- Clipboard
 vim.opt.clipboard = 'unnamedplus'
 
+-- Set terminal title
+vim.opt.title = true
+
 -- Shortcuts
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '

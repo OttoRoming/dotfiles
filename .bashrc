@@ -10,6 +10,7 @@ export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.config/bin:$PATH"
 
 [[ -z "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # If not running interactively, don't do more
 [[ $- != *i* ]] && return
@@ -18,7 +19,6 @@ export PATH="$HOME/.config/bin:$PATH"
 alias ls='eza --icons=auto'
 alias tree='eza -T --icons=auto'
 alias cat='bat -pp'
-alias man='batman'
 
 # Verbose
 alias cp='cp -v'
