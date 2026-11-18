@@ -1,3 +1,79 @@
+-- Shared $HOME across glibc Linux distros, Alpine (musl) and FreeBSD. Native
+-- artifacts (.so files, treesitter parsers, LSP binaries) are not portable, so
+-- keep Neovim's data/state/cache dirs per platform. Config stays shared.
+do
+    -- 'packpath' was initialized before init.lua ran, from the startup XDG vars
+    local startup_site = vim.fn.stdpath('data') .. '/site'
+    local data_root = vim.fs.dirname(vim.fn.stdpath('data'))
+    local state_root = vim.fs.dirname(vim.fn.stdpath('state'))
+    local cache_root = vim.fs.dirname(vim.fn.stdpath('cache'))
+
+    --- glibc or musl on Linux, from the ELF interpreter in /proc/self/exe.
+    --- The compiler triple is only a fallback for when /proc is unavailable.
+    local function detect_libc()
+        local fd = vim.uv.fs_open('/proc/self/exe', 'r', 438)
+        if fd then
+            local head = vim.uv.fs_read(fd, 4096, 0) or ''
+            vim.uv.fs_close(fd)
+            if head:find('ld-musl', 1, true) then return '-musl' end
+            if head:find('ld-linux', 1, true) then return '-gnu' end
+        end
+        for _, cc in ipairs({ 'cc', 'clang', 'gcc' }) do
+            local ok, out = pcall(function()
+                return vim.system({ cc, '-dumpmachine' }, { text = true }):wait(1000)
+            end)
+            if ok and out.code == 0 and out.stdout then
+                if out.stdout:find('musl', 1, true) then return '-musl' end
+                if out.stdout:find('gnu', 1, true) then return '-gnu' end
+            end
+        end
+        return ''
+    end
+
+    --- Distro ID from /etc/os-release (e.g. 'arch', 'nixos', 'alpine') so that
+    --- NixOS does not share artifacts with another glibc distribution.
+    local function detect_distro()
+        local file = io.open('/etc/os-release', 'r')
+        if not file then return '' end
+        local distro
+        for line in file:lines() do
+            local value = line:match('^ID="?([%w%._%-]+)"?%s*$')
+            if value then
+                distro = value:lower()
+                break
+            end
+        end
+        file:close()
+        return distro and '-' .. distro or ''
+    end
+
+    local u = vim.uv.os_uname()
+    local sysname = u.sysname:lower()
+    local arch = u.machine:lower():gsub('^amd64$', 'x86_64')
+    local is_linux = sysname == 'linux'
+    local id = ('%s-%s%s%s'):format(
+        sysname,
+        arch,
+        is_linux and detect_libc() or '',
+        is_linux and detect_distro() or ''
+    )
+
+    vim.env.XDG_DATA_HOME = data_root .. '/' .. id
+    vim.env.XDG_STATE_HOME = state_root .. '/' .. id
+    vim.env.XDG_CACHE_HOME = cache_root .. '/' .. id
+
+    -- 'packpath' is initialized before init.lua runs, from the XDG vars at
+    -- startup: put the per-platform dir first and drop the shared legacy one.
+    local packpath = {}
+    for _, dir in ipairs(vim.split(vim.o.packpath, ',')) do
+        if dir ~= startup_site and dir ~= startup_site .. '/after' then
+            packpath[#packpath + 1] = dir
+        end
+    end
+    table.insert(packpath, 1, vim.fn.stdpath('data') .. '/site')
+    vim.opt.packpath = table.concat(packpath, ',')
+end
+
 vim.opt.number = true
 vim.opt.scrolloff = 6
 vim.opt.sidescrolloff = 8
