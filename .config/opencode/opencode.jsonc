@@ -1,0 +1,18 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "providers": {
+    "chattex": {
+      "name": "Chattex",
+      "env": ["CHATTEX_API_KEY"],
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "https://chattex.lysator.liu.se/v1"
+      },
+      "models": {
+        "MODEL_ID": {
+          "name": "MODEL_ID"
+        }
+      }
+    }
+  }
+}
