@@ -44,6 +44,10 @@
       "rev": "2a6940af80375532e5e9e7c1f2fc6319a1b7a69d",
       "src": "https://github.com/mason-org/mason.nvim"
     },
+    "mdmath.nvim": {
+      "rev": "699acb27fd34bfdf92a43ce0abdd17f0c7a948fe",
+      "src": "https://github.com/thiago4532/mdmath.nvim"
+    },
     "mdx.nvim": {
       "rev": "6c3dc7c4a4b58b5d86404c21a9b4655282ca08c5",
       "src": "https://github.com/davidmh/mdx.nvim"
@@ -103,6 +107,10 @@
     "mini.tabline": {
       "rev": "3dd8686c15e3cfb1bfbc4abfecf699326f1de4c0",
       "src": "https://github.com/nvim-mini/mini.tabline"
+    },
+    "mkdnflow.nvim": {
+      "rev": "272148c4bd1996380b9b540540758d57667e59c4",
+      "src": "https://github.com/jakewvincent/mkdnflow.nvim"
     },
     "neovim-ayu": {
       "rev": "e5a9f0fa2918d6b5f57c21b3ac014314ee5e41c8",

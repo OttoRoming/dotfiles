@@ -7,7 +7,7 @@ type fnm &> /dev/null && eval "$(fnm env --shell bash)"
 [[ "$(gcc -dumpmachine)" == 'x86_64-unknown-linux-gnu' ]] && export FNM_ARCH=x64-musl
 
 export PATH="$HOME/go/bin:$PATH"
-export PATH="$HOME/.config/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 [[ -z "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -19,6 +19,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 alias ls='eza --icons=auto'
 alias tree='eza -T --icons=auto'
 alias cat='bat -pp'
+# alias man='batman'
 
 # Verbose
 alias cp='cp -v'

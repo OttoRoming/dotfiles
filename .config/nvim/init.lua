@@ -200,7 +200,8 @@ vim.pack.add({
     'https://github.com/refractalize/oil-git-status.nvim',
     'https://github.com/JezerM/oil-lsp-diagnostics.nvim',
 
-    'https://github.com/obsidian-nvim/obsidian.nvim'
+    -- 'https://github.com/obsidian-nvim/obsidian.nvim'
+    'https://github.com/jakewvincent/mkdnflow.nvim'
 
     -- AI
     -- 'https://github.com/github/copilot.vim',
@@ -325,6 +326,8 @@ vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 require('oil-git-status').setup({})
 require('oil-lsp-diagnostics').setup()
+
+require('mkdnflow').setup()
 
 -- require('obsidian').setup({
 --     legacy_commands = false, -- silcene warning

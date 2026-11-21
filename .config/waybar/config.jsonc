@@ -33,7 +33,7 @@
   // (Alpine's 0.15.0 is not). Stream the title from mango's IPC instead.
   "custom/window": {
     "format": "{}",
-    "exec": "~/.config/bin/mango-window",
+    "exec": "~/.local/bin/mango-window",
     "escape": true,
     "max-length": 80,
     "restart-interval": 5,
