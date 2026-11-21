@@ -426,7 +426,12 @@ client.connect_signal("manage", function(c)
   then
     gears.timer.delayed_call(function()
       if c.valid and not c.floating then
-        c:to_primary_section()
+        -- client:to_primary_section() is newer than Awesome 4.3, so swap
+        -- with the current master instead.
+        local master = awful.client.getmaster(c.screen)
+        if master and master ~= c then
+          c:swap(master)
+        end
       end
     end)
   end
@@ -466,6 +471,22 @@ awful.spawn.with_shell(
 awful.spawn.with_shell(
   "command -v xset >/dev/null 2>&1 && xset r rate 300 30"
 )
+
+-- Disable pointer acceleration. xset covers the legacy X pointer driver;
+-- libinput (the usual Xorg driver now) ignores it, so switch every device
+-- to the flat profile with speed 0.
+awful.spawn.with_shell([[
+  command -v xset >/dev/null 2>&1 && xset m 0 0
+
+  command -v xinput >/dev/null 2>&1 || exit 0
+  xinput list --id-only 2>/dev/null | while read -r id; do
+    # Newer libinput exposes adaptive/flat/custom, older only adaptive/flat.
+    xinput set-prop "$id" "libinput Accel Profile Enabled" 0 1 0 2>/dev/null ||
+      xinput set-prop "$id" "libinput Accel Profile Enabled" 0 1 2>/dev/null
+    xinput set-prop "$id" "libinput Accel Speed" 0 2>/dev/null
+    xinput set-prop "$id" "Device Accel Constant Deceleration" 1 2>/dev/null
+  done
+]])
 
 awful.spawn.with_shell(
   "command -v numlockx >/dev/null 2>&1 && numlockx on"

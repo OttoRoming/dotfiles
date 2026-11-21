@@ -100,7 +100,8 @@ client.connect_signal("unmanage", update_titles)
 
 local function make_title()
   local widget = wibox.widget.textbox()
-  widget:set_halign("center")
+  -- Awesome 4.3 only has set_align here; set_halign arrived later.
+  widget:set_align("center")
   widget:set_markup(current_title())
 
   title_widgets[#title_widgets + 1] = widget
