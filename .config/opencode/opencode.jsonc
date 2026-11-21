@@ -9,8 +9,8 @@
         "baseURL": "https://chattex.lysator.liu.se/v1"
       },
       "models": {
-        "MODEL_ID": {
-          "name": "MODEL_ID"
+        "qwen3.8:27b": {
+          "name": "qwenne"
         }
       }
     }
