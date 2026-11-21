@@ -49,6 +49,7 @@ theme.colors = colors
 theme.font = "Hack Nerd Font 12"
 theme.bar_height = 38
 theme.bar_gap = 10
+theme.window_gap = 5
 
 -- Mango's client border colours.
 theme.focus = "#F22C57"
@@ -93,6 +94,11 @@ beautiful.init({
   border_color_normal = theme.border_normal,
   border_color_focus = theme.focus,
   border_color_marked = colors.bright_yellow,
+
+  -- Gaps between tiled clients and the screen edges. Half the bar's 10px
+  -- Waybar-style margin. Keep them when a tag has only one client.
+  useless_gap = theme.window_gap,
+  gap_single_client = true,
 
   -- Taglist: transparent buttons with a rounded primary background when
   -- selected, matching the Waybar workspace style.

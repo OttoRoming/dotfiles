@@ -3,7 +3,7 @@
 -- X11 counterpart to the Mango/Waybar setup in this dotfiles repository:
 --   * Mango keybindings and window behaviour
 --   * Waybar's top bar, rewritten as a native wibar
---   * xterm as the terminal
+--   * alacritty as the terminal
 
 pcall(require, "luarocks.loader")
 
@@ -48,7 +48,7 @@ end
 -- Variables ------------------------------------------------------------
 
 local modkey = "Mod4"
-local terminal = "xterm"
+local terminal = "alacritty"
 local browser = "firefox"
 
 local layout_tile = awful.layout.suit.tile
@@ -115,19 +115,6 @@ local clientbuttons = gears.table.join(
 
 -- Tag helpers ----------------------------------------------------------
 
-local function comboview(t)
-  if not t then
-    return
-  end
-
-  -- Keep at least one tag selected.
-  if t.selected and #t.screen.selected_tags == 1 then
-    return
-  end
-
-  awful.tag.viewtoggle(t)
-end
-
 local function view_all_tags()
   local s = awful.screen.focused()
   awful.tag.viewmore(s.tags, s)
@@ -139,7 +126,7 @@ local globalkeys = gears.table.join(
   -- Applications
   awful.key({ modkey }, "t", function()
     awful.spawn(terminal)
-  end, { description = "open xterm", group = "launcher" }),
+  end, { description = "open alacritty", group = "launcher" }),
 
   awful.key({ modkey }, "b", function()
     awful.spawn(browser)
@@ -349,12 +336,15 @@ local globalkeys = gears.table.join(
   end, { description = "screenshot selection", group = "media" })
 )
 
--- Tags 1-9: comboview on Super+N, move client on Super+Shift+N.
+-- Tags 1-9: switch to tag on Super+N, move client on Super+Shift+N.
 for i = 1, 9 do
   globalkeys = gears.table.join(
     globalkeys,
     awful.key({ modkey }, "#" .. (i + 9), function()
-      comboview(awful.screen.focused().tags[i])
+      local t = awful.screen.focused().tags[i]
+      if t then
+        awful.tag.viewonly(t)
+      end
     end, { description = "view tag " .. i, group = "tag" }),
 
     awful.key({ modkey, "Shift" }, "#" .. (i + 9), function()

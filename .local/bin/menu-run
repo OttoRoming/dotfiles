@@ -1,3 +1,27 @@
 #!/usr/bin/env bash
 
-j4-dmenu-desktop -d menu
+font='DroidSansM Nerd Font 12'
+
+if command -v j4-dmenu-desktop >/dev/null 2>&1; then
+  exec j4-dmenu-desktop -d menu
+fi
+
+if command -v bemenu-run >/dev/null 2>&1; then
+  source "$HOME/.cache/theme/colors.sh"
+  exec bemenu-run --ignorecase --list 25 --counter always --prompt '' --width-factor 0.26 --center --cw 2 --fn "$font" \
+    --tb "#${primary}cc"    --tf "#${foreground}ff" \
+    --fb "#${background}cc" --ff "#${foreground}ff" \
+    --nb "#${background}cc" --nf "#${foreground}ff" \
+    --ab "#${background}cc" --af "#${foreground}ff" \
+    --hb "#${primary}cc"    --hf "#${foreground}ff"
+fi
+
+if command -v dmenu_run >/dev/null 2>&1; then
+  source "$HOME/.cache/theme/colors.sh"
+  exec dmenu_run -i -l 25 -p '' -fn "$font" \
+    -nb "#${background}" -nf "#${foreground}" \
+    -sb "#${primary}"    -sf "#${foreground}"
+fi
+
+printf 'menu-run: neither j4-dmenu-desktop, bemenu-run nor dmenu_run is installed\n' >&2
+exit 1
