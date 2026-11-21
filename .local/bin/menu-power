@@ -1,12 +1,48 @@
 #!/usr/bin/env bash
 
+session_is_wayland() {
+  if [ "${XDG_SESSION_TYPE:-}" = "wayland" ]; then
+    return 0
+  fi
+
+  if [ -n "${WAYLAND_DISPLAY:-}" ] && [ -z "${DISPLAY:-}" ]; then
+    return 0
+  fi
+
+  return 1
+}
+
+if session_is_wayland; then
+  export BEMENU_BACKEND="${BEMENU_BACKEND:-wayland}"
+else
+  export BEMENU_BACKEND="${BEMENU_BACKEND:-x11}"
+fi
+
 lock=" lock"
 logout="󰀄 logout"
 reboot=" reboot"
 poweroff="⏻ poweroff"
 
 choice=$(printf '%s\n%s\n%s\n%s\n' "$lock" "$logout" "$reboot" "$poweroff" | "$HOME/.local/bin/menu")
-[ "$choice" == "$lock" ] && "$HOME/.local/bin/lock"
-[ "$choice" == "$logout" ] && pkill mango
-[ "$choice" == "$reboot" ] && systemctl reboot
-[ "$choice" == "$poweroff" ] && systemctl poweroff
+[ -z "$choice" ] && exit 0
+
+case "$choice" in
+  "$lock")
+    "$HOME/.local/bin/lock"
+    ;;
+  "$logout")
+    if session_is_wayland; then
+      pkill -x mango
+    elif command -v awesome-client >/dev/null 2>&1; then
+      awesome-client 'awesome.quit()' >/dev/null 2>&1 || pkill -x awesome
+    else
+      pkill -x awesome
+    fi
+    ;;
+  "$reboot")
+    systemctl reboot
+    ;;
+  "$poweroff")
+    systemctl poweroff
+    ;;
+esac
