@@ -5,3 +5,4 @@
  * is no window decoration stylesheet to import here.
  */
 @import '../../.cache/theme/colors.css';
+@import 'colors.css';

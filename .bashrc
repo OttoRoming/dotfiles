@@ -10,6 +10,7 @@ export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 [[ -z "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # If not running interactively, don't do more
 [[ $- != *i* ]] && return
