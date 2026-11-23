@@ -46,7 +46,7 @@ end
 
 theme.colors = colors
 
-theme.font = "Hack Nerd Font 12"
+theme.font = "sans-serif 12"
 theme.bar_height = 38
 theme.bar_gap = 10
 theme.window_gap = 5

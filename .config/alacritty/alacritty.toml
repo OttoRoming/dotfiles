@@ -2,10 +2,10 @@
 import = ["~/.cache/theme/alacritty.toml"]
 
 [font]
-normal = { family = "Hack Nerd Font", style = "Regular" }
-bold = { family = "Hack Nerd Font", style = "Bold" }
-italic = { family = "Hack Nerd Font", style = "Italic" }
-bold_italic = { family = "Hack Nerd Font", style = "Bold Italic" }
+normal = { family = "monospace", style = "Regular" }
+bold = { family = "monospace", style = "Bold" }
+italic = { family = "monospace", style = "Italic" }
+bold_italic = { family = "monospace", style = "Bold Italic" }
 size = 14
 
 [window]

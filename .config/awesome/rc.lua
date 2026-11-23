@@ -492,6 +492,7 @@ awful.spawn.with_shell(
 run_once("xcompmgr", "xcompmgr")
 run_once("dunst", "dunst")
 run_once("clipmenud", "clipmenud")
+run_once("oneko", "oneko")
 
 awful.spawn.with_shell([[
   for agent in \

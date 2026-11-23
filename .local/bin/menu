@@ -2,7 +2,7 @@
 
 source "$HOME/.cache/theme/colors.sh"
 
-font='DroidSansM Nerd Font 12'
+font='sans-serif 12'
 
 if command -v bemenu >/dev/null 2>&1; then
   exec bemenu --ignorecase --list 25 --counter always --prompt '' --width-factor 0.26 --center --cw 2 --fn "$font" \
