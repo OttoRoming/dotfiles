@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-font='DroidSansM Nerd Font 12'
+font='sans-serif 12'
 
 if command -v j4-dmenu-desktop >/dev/null 2>&1; then
   exec j4-dmenu-desktop -d menu
