@@ -449,7 +449,7 @@ local tag_template = {
 function bar.create(s)
   local taglist = awful.widget.taglist({
     screen = s,
-    filter = awful.widget.taglist.filter.all,
+    filter = awful.widget.taglist.filter.noempty,
     buttons = taglist_buttons,
     widget_template = tag_template,
   })
