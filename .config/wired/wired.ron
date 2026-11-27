@@ -10,7 +10,7 @@
     max_notifications: 0,
 
     // Icon theme for icons lookup
-    icon_theme: "Adwaita",
+    icon_theme: "breeze",
 
     // The default timeout, in milliseconds, for notifications that don't have an initial timeout set.
     // 1000ms = 1s.
