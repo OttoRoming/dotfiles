@@ -3,7 +3,7 @@
 font='sans-serif 12'
 
 if command -v j4-dmenu-desktop >/dev/null 2>&1; then
-  exec j4-dmenu-desktop -d menu
+  exec j4-dmenu-desktop -d ~/.local/bin/menu
 fi
 
 if command -v bemenu-run >/dev/null 2>&1; then
