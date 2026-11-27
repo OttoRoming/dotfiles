@@ -423,25 +423,15 @@ local taglist_buttons = gears.table.join(
 
 local tag_template = {
   {
-    {
-      {
-        id = "text_role",
-        widget = wibox.widget.textbox,
-      },
-      left = 8,
-      right = 8,
-      top = 1,
-      bottom = 0,
-      widget = wibox.container.margin,
-    },
-    id = "background_role",
-    widget = wibox.container.background,
+    id = "text_role",
+    align = "center",
+    valign = "center",
+    widget = wibox.widget.textbox,
   },
-  top = 5,
-  bottom = 5,
-  left = 2,
-  right = 2,
-  widget = wibox.container.margin,
+  forced_width = theme.bar_height,
+  forced_height = theme.bar_height,
+  id = "background_role",
+  widget = wibox.container.background,
 }
 
 -- Bar ------------------------------------------------------------------
@@ -482,32 +472,18 @@ function bar.create(s)
     },
     bg = colors.background,
     fg = colors.foreground,
-    shape = gears.shape.rectangle,
-    shape_border_width = 2,
-    shape_border_color = colors.primary,
     widget = wibox.container.background,
-  })
-
-  -- Waybar uses margin: 10 10 0 10. Awesome 4.3's awful.wibar has no margins,
-  -- so the gap is created inside a slightly taller transparent wibar.
-  local outer = wibox.widget({
-    content,
-    top = theme.bar_gap,
-    left = theme.bar_gap,
-    right = theme.bar_gap,
-    bottom = 0,
-    widget = wibox.container.margin,
   })
 
   return awful.wibar({
     position = "top",
     screen = s,
-    height = theme.bar_height + theme.bar_gap,
+    height = theme.bar_height,
     font = theme.font,
-    bg = "#00000000",
+    bg = colors.background,
     fg = colors.foreground,
     ontop = true,
-    widget = outer,
+    widget = content,
   })
 end
 
