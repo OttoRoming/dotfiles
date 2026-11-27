@@ -409,8 +409,11 @@ default_mode "locked"
 // copy_command "wl-copy"                    // wayland
 // copy_command "pbcopy"                     // osx
 // 
-// Wayland system clipboard
-copy_command "wl-copy"
+// Leave copy_command unset. With it set, Zellij consumes OSC 52 clipboard
+// writes from panes (including OpenCode's copy shortcut and copy-on-select)
+// and pipes them to this command instead of forwarding them to the outer
+// terminal. The terminal here speaks OSC 52, so passthrough is the working path.
+// copy_command "wl-copy"
  
 // Choose the destination for copied text
 // Allows using the primary selection buffer (on x11/wayland) instead of the system clipboard.

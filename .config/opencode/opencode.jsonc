@@ -13,6 +13,38 @@
           "name": "qwenne"
         }
       }
+    },
+
+    "charre": {
+      "name": "Charre",
+      "env": ["CHARRE_API_KEY"],
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "https://charre.romi.ng/v1"
+      },
+      "models": {
+        "qwen3.5": {
+          "name": "qwenne",
+          "modelID": "unsloth/Qwen3.5-35B-A3B-GGUFYUD-Q4_K_XL",
+          "capabilities": {
+              "tools": true,
+              "input": ["text"],
+              "output": ["text"]
+          },
+          "limit": {
+              "context": 131072,
+              "output": 8192
+          }
+        }
+      }
+    }
+  },
+  "agents": {
+    "explore": {
+      "model": "opencode-go/hy4-flash-free#high"
+    },
+    "general": {
+      "model": "opencode-go/hy4-flash-free#high"
     }
   }
 }

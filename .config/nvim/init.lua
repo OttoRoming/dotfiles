@@ -264,6 +264,14 @@ require('mason').setup()
 require('mason-lspconfig').setup({
     automatic_enable = true
 })
+
+-- OmniSharp (C#) comes from the project's Nix dev shell, not Mason.
+-- lspconfig's default cmd uses `OmniSharp` from $PATH.
+if vim.fn.executable('OmniSharp') == 1 then
+    vim.lsp.config('omnisharp', {})
+    vim.lsp.enable('omnisharp')
+end
+
 require('lazydev').setup()
 require('fidget').setup({})
 
@@ -283,6 +291,14 @@ vim.cmd('colorscheme gruvbox')
 -- -- 'all' expands to every parser nvim-treesitter knows about (300+), so the
 -- -- first launch spends a while downloading and compiling in the background.
 -- require('nvim-treesitter').install({ 'all' })
+
+-- Avalonia/XAML: Neovim has no built-in filetype for these, treat as XML
+vim.filetype.add({
+    extension = {
+        axaml = 'xml',
+        xaml = 'xml',
+    },
+})
 
 vim.api.nvim_create_autocmd('FileType', {
     callback = function(args)
